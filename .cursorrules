@@ -1,0 +1,83 @@
+# Next.js 16 + React 19 + TypeScript 프로젝트 규칙
+
+## 기술 스택
+- Next.js 16.0.10 (App Router)
+- React 19.2.1
+- TypeScript 5
+- Tailwind CSS 4
+- ESLint 9
+
+## 코드 스타일 및 컨벤션
+
+### TypeScript
+- 항상 TypeScript를 사용하고, `any` 타입은 피할 것
+- 컴포넌트 props는 명시적으로 타입 정의
+- `interface`보다 `type`을 선호 (일관성을 위해)
+- strict 모드 활성화된 상태 유지
+
+### React 컴포넌트
+- 함수형 컴포넌트만 사용
+- 기본적으로 Server Components 사용
+- Client Components가 필요한 경우에만 `'use client'` 지시어 추가
+- 컴포넌트는 named export보다 default export 사용
+- 파일명은 PascalCase 사용 (예: `UserProfile.tsx`)
+
+### Next.js 규칙
+- App Router (`app/` 디렉토리) 사용
+- 페이지는 `page.tsx`, 레이아웃은 `layout.tsx`
+- 메타데이터는 `metadata` 객체나 `generateMetadata` 함수 사용
+- 이미지는 `next/image`의 `Image` 컴포넌트 사용
+- 링크는 `next/link`의 `Link` 컴포넌트 사용
+- 경로 별칭 `@/*` 사용 (예: `@/components/Button`)
+
+### API 개발 규칙
+- Route Handlers는 `app/api/` 디렉토리에 작성 (`route.ts`)
+- 브라우저 기본 `fetch` 사용 (별도의 API 클라이언트 래퍼 불필요)
+- 타입은 최소한으로 유지 - 공통 타입만 `types/` 디렉토리에 정의
+- 특정 페이지/컴포넌트에서만 사용하는 타입은 인라인으로 정의
+- 불필요한 추상화 레이어 제거 (KISS 원칙)
+
+### Tailwind CSS
+- Tailwind CSS 유틸리티 클래스 우선 사용
+- 커스텀 CSS는 최소화
+- 클래스 이름은 논리적 순서로 정렬 (레이아웃 → 타이포그래피 → 색상 → 효과)
+- 다크모드는 `dark:` prefix 사용
+
+### 파일 구조
+```
+app/
+  ├── (routes)/       # 라우트 그룹
+  ├── api/            # API 라우트
+  ├── components/     # 페이지 특정 컴포넌트
+  ├── layout.tsx      # 루트 레이아웃
+  └── page.tsx        # 홈페이지
+components/           # 재사용 가능한 공통 컴포넌트
+lib/                  # 유틸리티 함수, 헬퍼
+types/                # 공유 TypeScript 타입 정의
+public/               # 정적 파일
+```
+
+### 명명 규칙
+- 컴포넌트: PascalCase (예: `UserProfile.tsx`)
+- 유틸리티 함수: camelCase (예: `formatDate.ts`)
+- 상수: UPPER_SNAKE_CASE (예: `API_ENDPOINT`)
+- 타입/인터페이스: PascalCase (예: `UserData`)
+
+### 성능 최적화
+- 동적 import는 `next/dynamic` 사용
+- 이미지 최적화를 위해 항상 `next/image` 사용
+- 필요한 경우 `loading.tsx`, `error.tsx` 파일 추가
+- Server Components에서 데이터 페칭 수행
+
+### 접근성
+- 시맨틱 HTML 사용
+- 버튼에는 적절한 aria-label 추가
+- 이미지에는 의미있는 alt 텍스트 제공
+
+### 코드 품질
+- ESLint 규칙 준수
+- 사용하지 않는 import 제거
+- console.log는 프로덕션 코드에서 제거
+- 컴포넌트는 단일 책임 원칙 준수
+
+
